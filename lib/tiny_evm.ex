@@ -20,6 +20,7 @@ defmodule TinyEVM do
     iex> TinyEVM.execute(0x0f572e5295c57f15886f9b263e2f6d2d6c7b5ec6, 100000, <<96, 1, 96, 3, 24, 96, 0, 85>>)
     {79988, %{0x0f572e5295c57f15886f9b263e2f6d2d6c7b5ec6 => %{0 => 2}}}
   """
+  @spec execute(address :: String.t, gas :: integer, code :: binary) :: {integer, %{String.t => map}}
   def execute(address, gas, code) do
     context = %ExecutionContext{
                 gas_remaining: gas,
@@ -35,6 +36,11 @@ defmodule TinyEVM do
     {ending_context.gas_remaining, %{address => ending_context.storage}}
   end
 
+  @doc """
+  Recursively executes the operation at the context.program_counter index of context.machine_code for the provided
+  context, exiting when the program counter has reached the end of the code or an error or stop instruction is detected.
+  """
+  @spec execute(context :: ExecutionContext) :: ExecutionContext
   defp execute(context) do
     cond do
       context.execution_state == :error ->
