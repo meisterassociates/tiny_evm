@@ -1,8 +1,8 @@
 defmodule TinyEVM.Operation do
   alias TinyEVM.ExecutionContext
 
-  @type execute :: (ExecutionContext -> {[:ok | :error], ExecutionContext})
-  @type get_gas_cost :: (ExecutionContext -> integer)
+  @type get_execute_function :: (ExecutionContext -> {[:ok | :error], ExecutionContext})
+  @type get_gas_cost_function :: (ExecutionContext -> integer)
   @enforce_keys [:get_execute_function, :get_gas_cost_function]
   defstruct [:get_execute_function, :get_gas_cost_function]
 

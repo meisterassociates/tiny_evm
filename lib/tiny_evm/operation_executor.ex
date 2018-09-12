@@ -27,6 +27,7 @@ defmodule TinyEVM.OperationExecutor do
 
   @spec execute_operation(op_code :: byte, context :: ExecutionContext) :: ExecutionContext
   def execute_operation(op_code, context) do
+    # TODO: Defining Map here for now until I can figure out Erlang VM issue preventing me from doing so in @op_code_to_operation
     op_code_to_operation = @operation_factories
     |> Enum.map(fn factory ->
       Enum.map(factory.get_ordered_op_codes(), fn op ->
