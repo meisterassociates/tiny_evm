@@ -1,4 +1,8 @@
 defmodule TinyEVM.OperationExecutor do
+  @moduledoc """
+  Façade executor for Operations, allowing the appropriate Operation to be used based on Op Code.
+  """
+
   alias TinyEVM.Operation
   alias TinyEVM.ExecutionContext
 

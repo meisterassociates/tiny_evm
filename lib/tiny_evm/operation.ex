@@ -1,4 +1,8 @@
 defmodule TinyEVM.Operation do
+  @moduledoc """
+  Defines the Operation behavior and provides common functions for it. Operations are to be used to implement
+  grouping of one or more EVM instructions and calculate their gas prices.
+  """
   alias TinyEVM.ExecutionContext
 
   @callback get_ordered_op_codes() :: [byte]
