@@ -12,10 +12,10 @@ defmodule TinyEVM.Operation.PushOperation do
   @push32_op 127
 
   @doc """
-  Gets an ordered list of all of the Op Codes this OperationFactory is capable of supporting.
+  Gets an ordered list of all of the Op Codes this Operation is capable of supporting.
 
   ## Examples
-    iex> TinyEVM.Operation.OperationFactory.PushOperationFactory.get_ordered_op_codes()
+    iex> TinyEVM.Operation.PushOperation.get_ordered_op_codes()
     [96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127]
   """
   @spec get_ordered_op_codes() :: [byte]

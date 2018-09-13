@@ -11,10 +11,10 @@ defmodule TinyEVM.Operation.StoreToStorageOperation do
   @sstore_op 85
 
   @doc """
-  Gets an ordered list of all of the Op Codes this OperationFactory is capable of supporting.
+  Gets an ordered list of all of the Op Codes this Operation is capable of supporting.
 
   ## Examples
-    iex> TinyEVM.Operation.OperationFactory.StoreToStorageOperationFactory.get_ordered_op_codes()
+    iex> TinyEVM.Operation.StoreToStorageOperation.get_ordered_op_codes()
     [85]
   """
   @spec get_ordered_op_codes() :: [byte]

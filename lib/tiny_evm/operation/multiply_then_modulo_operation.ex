@@ -11,10 +11,10 @@ defmodule TinyEVM.Operation.MultiplyThenModuloOperation do
   @mulmod_op 9
 
   @doc """
-  Gets an ordered list of all of the Op Codes this OperationFactory is capable of supporting.
+  Gets an ordered list of all of the Op Codes this Operation is capable of supporting.
 
   ## Examples
-    iex> TinyEVM.Operation.OperationFactory.MultiplyThenModuloOperationFactory.get_ordered_op_codes()
+    iex> TinyEVM.Operation.MultiplyThenModuloOperation.get_ordered_op_codes()
     [9]
   """
   @spec get_ordered_op_codes() :: [byte]

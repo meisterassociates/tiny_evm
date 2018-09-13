@@ -12,10 +12,10 @@ defmodule TinyEVM.Operation.SwapOperation do
   @swap16_op 159
 
   @doc """
-  Gets an ordered list of all of the Op Codes this OperationFactory is capable of supporting.
+  Gets an ordered list of all of the Op Codes this Operation is capable of supporting.
 
   ## Examples
-    iex> TinyEVM.Operation.OperationFactory.SwapOperationFactory.get_ordered_op_codes()
+    iex> TinyEVM.Operation.SwapOperation.get_ordered_op_codes()
     [144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159]
   """
   @spec get_ordered_op_codes() :: [byte]
