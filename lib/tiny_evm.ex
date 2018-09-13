@@ -41,7 +41,7 @@ defmodule TinyEVM do
   context, exiting when the program counter has reached the end of the code or an error or stop instruction is detected.
   """
   @spec execute(context :: ExecutionContext) :: ExecutionContext
-  defp execute(context) do
+  def execute(context) do
     cond do
       context.execution_state == :error ->
         context

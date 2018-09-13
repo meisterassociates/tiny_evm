@@ -27,7 +27,7 @@ defmodule TinyEVM.Operation.StoreToStorageOperation do
   `Map.put(context.storage, item1, item2)`
   """
   @spec execute(op_code :: byte, context :: ExecutionContext) :: ExecutionContext
-  def execute(op_code, context) do
+  def execute(op_code, context) when op_code == @sstore_op do
     {:ok, gas_cost} = get_gas_cost(op_code, context)
     gas_remaining = context.gas_remaining - gas_cost
 
@@ -54,7 +54,7 @@ defmodule TinyEVM.Operation.StoreToStorageOperation do
   Gets the gas cost for the SSTORE operation, given the provided `context`.
   """
   @spec get_gas_cost(op_code :: byte, context :: ExecutionContext) :: {(:ok | :error), integer}
-  def get_gas_cost(_op_code, context) do
+  def get_gas_cost(op_code, context) when op_code == @sstore_op do
     cond do
       length(context.stack) < 2 ->
         {:error, 0}

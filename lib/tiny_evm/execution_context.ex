@@ -5,5 +5,6 @@ defmodule TinyEVM.ExecutionContext do
   data structure for convenience, and unused fields are not listed. These can be separated, and missing fields can
   be added as op codes are added that require them to be.
   """
+  @enforce_keys [:gas_remaining, :gas_refund, :program_counter, :machine_code, :stack, :storage, :execution_state]
   defstruct [:gas_remaining, :gas_refund, :program_counter, :machine_code, :stack, :storage, :execution_state]
 end

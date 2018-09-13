@@ -27,7 +27,7 @@ defmodule TinyEVM.Operation.SwapOperation do
   Executes the SWAP operation, swapping `Enum.at(context.stack, 0)` with index 1-15 depending on the provided `op_code`.
   """
   @spec execute(op_code :: byte, context :: ExecutionContext) :: ExecutionContext
-  def execute(op_code, context) do
+  def execute(op_code, context) when op_code >= @swap1_op or op_code <= @swap16_op do
     {:ok, gas_cost} = get_gas_cost(op_code, context)
     gas_remaining = context.gas_remaining - gas_cost
     swap_index = (op_code - @swap1_op) + 1
@@ -52,7 +52,7 @@ defmodule TinyEVM.Operation.SwapOperation do
   Gets the gas cost for the SWAP operations.
   """
   @spec get_gas_cost(op_code :: byte, contest :: ExecutionContext) :: {(:ok | :error), integer}
-  def get_gas_cost(_op_code, _context) do
+  def get_gas_cost(op_code, _context) when op_code >= @swap1_op or op_code <= @swap16_op do
     {:ok, Gas.swap()}
   end
 end

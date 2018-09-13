@@ -29,7 +29,7 @@ defmodule TinyEVM.Operation.PushOperation do
   bytes. The resulting value will be pushed onto the stack.
   """
   @spec execute(op_code :: byte, context :: ExecutionContext) :: ExecutionContext
-  def execute(op_code, context) do
+  def execute(op_code, context) when op_code >= @push1_op and op_code <= @push32_op do
     num_bytes_to_push = (op_code - @push1_op) + 1
     bytes_pc = context.program_counter + 1
     pc_end_value = min(bytes_pc + num_bytes_to_push, byte_size(context.machine_code))
@@ -59,7 +59,7 @@ defmodule TinyEVM.Operation.PushOperation do
   Gets gas costs for the PUSH function specified in the provided Op Code.
   """
   @spec get_gas_cost(op_code :: byte, context :: ExecutionContext) :: {(:ok | :error), integer}
-  def get_gas_cost(_op_code, _context) do
+  def get_gas_cost(op_code, _context) when op_code >= @push1_op and op_code <= @push32_op do
     {:ok, Gas.push()}
   end
 end
