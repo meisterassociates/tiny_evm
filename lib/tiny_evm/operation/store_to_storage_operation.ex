@@ -34,6 +34,7 @@ defmodule TinyEVM.Operation.StoreToStorageOperation do
     case Util.pop_stack(context.stack, 2) do
       {:error, message} ->
         Operation.error(message, gas_remaining, context)
+
       {:ok, [key, value], stack} ->
         storage = Map.put(context.storage, key, value)
         {_gas_cost, gas_refund} = calculate_storage_gas_cost_and_refund(storage, key, value)
@@ -53,14 +54,18 @@ defmodule TinyEVM.Operation.StoreToStorageOperation do
   @doc """
   Gets the gas cost for the SSTORE operation, given the provided `context`.
   """
-  @spec get_gas_cost(op_code :: byte, context :: ExecutionContext) :: {(:ok | :error), integer}
+  @spec get_gas_cost(op_code :: byte, context :: ExecutionContext) :: {:ok | :error, integer}
   def get_gas_cost(op_code, context) when op_code == @sstore_op do
     cond do
       length(context.stack) < 2 ->
         {:error, 0}
+
       true ->
         [storage_key, storage_value] = Enum.slice(context.stack, 0, 2)
-        {gas_cost, _refund} = calculate_storage_gas_cost_and_refund(context.storage, storage_key, storage_value)
+
+        {gas_cost, _refund} =
+          calculate_storage_gas_cost_and_refund(context.storage, storage_key, storage_value)
+
         {:ok, gas_cost}
     end
   end
@@ -72,6 +77,7 @@ defmodule TinyEVM.Operation.StoreToStorageOperation do
           0 -> {0, 0}
           _ -> {Gas.sset(), 0}
         end
+
       true ->
         case storage_value do
           0 -> {0, Gas.sclear()}

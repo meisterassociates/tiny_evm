@@ -34,8 +34,9 @@ defmodule TinyEVM.Operation.MultiplyThenModuloOperation do
     case Util.pop_stack(context.stack, 3) do
       {:error, message} ->
         Operation.error(message, gas_remaining, context)
+
       {:ok, [factor1, factor2, mod_by], stack} ->
-        value_to_push = rem (factor1 * factor2), mod_by
+        value_to_push = rem(factor1 * factor2, mod_by)
 
         %ExecutionContext{
           gas_remaining: gas_remaining,
@@ -52,7 +53,7 @@ defmodule TinyEVM.Operation.MultiplyThenModuloOperation do
   @doc """
   Calculates Gas costs for the Multiply Then Mod operation.
   """
-  @spec get_gas_cost(op_code :: byte, context :: ExecutionContext) :: {(:ok | :error), integer}
+  @spec get_gas_cost(op_code :: byte, context :: ExecutionContext) :: {:ok | :error, integer}
   def get_gas_cost(op_code, _context) when op_code == @mulmod_op do
     {:ok, Gas.mulmod()}
   end

@@ -33,5 +33,4 @@ defmodule TinyEVM.Gas do
   def xor do
     @very_low
   end
-
 end

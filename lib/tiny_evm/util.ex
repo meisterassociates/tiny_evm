@@ -16,9 +16,11 @@ defmodule TinyEVM.Util do
     iex> TinyEVM.Util.pop_stack([1, 2], 3)
     {:error, "Stack Underflow!"}
   """
-  @spec pop_stack(stack :: list, number_to_pop :: integer) :: ({:ok , list, list} | {:error | String.t})
+  @spec pop_stack(stack :: list, number_to_pop :: integer) ::
+          {:ok, list, list} | {:error | String.t()}
   def pop_stack(stack, number_to_pop) do
     {popped, stack} = Enum.split(stack, number_to_pop)
+
     if length(popped) != number_to_pop do
       {:error, "Stack Underflow!"}
     else
@@ -36,10 +38,11 @@ defmodule TinyEVM.Util do
     iex> TinyEVM.Util.push_stack(1..1024, 3)
     {:error, "Stack Overflow! Attempted to push [3] on the stack at max height [1024]."}
   """
-  @spec push_stack(stack :: list, item :: any) :: ({:ok , list} | {:error | String.t})
+  @spec push_stack(stack :: list, item :: any) :: {:ok, list} | {:error | String.t()}
   def push_stack(stack, item) do
     if length(stack) >= @stack_limit do
-      {:error, "Stack Overflow! Attempted to push [#{item}] on the stack at max height [#{@stack_limit}]."}
+      {:error,
+       "Stack Overflow! Attempted to push [#{item}] on the stack at max height [#{@stack_limit}]."}
     else
       {:ok, [item | stack]}
     end
@@ -61,7 +64,9 @@ defmodule TinyEVM.Util do
   @spec get_binary_as_int(binary :: binary, int_bytes :: integer) :: integer
   def get_binary_as_int(binary, int_bytes) do
     0..(int_bytes - 1)
-    |> Enum.reduce(0, fn index, value -> (value <<< 8) + if index < byte_size(binary), do: :binary.at(binary, index), else: 0 end)
+    |> Enum.reduce(0, fn index, value ->
+      (value <<< 8) + if index < byte_size(binary), do: :binary.at(binary, index), else: 0
+    end)
   end
 
   @doc """
@@ -77,18 +82,21 @@ defmodule TinyEVM.Util do
   @spec swap_list_indexes(list :: list, index1 :: integer, index2 :: integer) :: list
   def swap_list_indexes(list, index1, index2) do
     list_length = length(list)
+
     if index1 >= list_length or index2 >= list_length or index1 < 0 or index2 < 0 do
       {:error, []}
     else
-      swapped_stack = list
-      |> Enum.with_index
-      |> Enum.map(fn({value, index}) ->
-        case index do
-          ^index1 -> Enum.at(list, index2)
-          ^index2 -> Enum.at(list, index1)
-          _ -> value
-        end
-      end)
+      swapped_stack =
+        list
+        |> Enum.with_index()
+        |> Enum.map(fn {value, index} ->
+          case index do
+            ^index1 -> Enum.at(list, index2)
+            ^index2 -> Enum.at(list, index1)
+            _ -> value
+          end
+        end)
+
       {:ok, swapped_stack}
     end
   end

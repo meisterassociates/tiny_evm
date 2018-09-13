@@ -16,7 +16,8 @@ defmodule TinyEVMTest do
     @tests
     |> Enum.map(&read_test_file/1)
     |> Enum.each(fn test ->
-      {remaining_gas, storage} = TinyEVM.execute(test.input.address, test.input.gas, test.input.code)
+      {remaining_gas, storage} =
+        TinyEVM.execute(test.input.address, test.input.gas, test.input.code)
 
       assert remaining_gas == test.output.gas
       assert test.output.storage[test.input.address] == storage[test.input.address]

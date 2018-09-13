@@ -30,11 +30,12 @@ defmodule TinyEVM.Operation.SwapOperation do
   def execute(op_code, context) when op_code >= @swap1_op or op_code <= @swap16_op do
     {:ok, gas_cost} = get_gas_cost(op_code, context)
     gas_remaining = context.gas_remaining - gas_cost
-    swap_index = (op_code - @swap1_op) + 1
+    swap_index = op_code - @swap1_op + 1
 
     case Util.swap_list_indexes(context.stack, 0, swap_index) do
       {:error, _} ->
         Operation.error("Stack Underflow!", gas_remaining, context)
+
       {:ok, swapped_stack} ->
         %ExecutionContext{
           gas_remaining: gas_remaining,
@@ -51,7 +52,7 @@ defmodule TinyEVM.Operation.SwapOperation do
   @doc """
   Gets the gas cost for the SWAP operations.
   """
-  @spec get_gas_cost(op_code :: byte, contest :: ExecutionContext) :: {(:ok | :error), integer}
+  @spec get_gas_cost(op_code :: byte, contest :: ExecutionContext) :: {:ok | :error, integer}
   def get_gas_cost(op_code, _context) when op_code >= @swap1_op or op_code <= @swap16_op do
     {:ok, Gas.swap()}
   end

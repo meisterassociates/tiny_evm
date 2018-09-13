@@ -35,6 +35,7 @@ defmodule TinyEVM.Operation.XorOperation do
     case Util.pop_stack(context.stack, 2) do
       {:error, message} ->
         Operation.error(message, gas_remaining, context)
+
       {:ok, [xor_first, xor_second], stack} ->
         to_push = xor_first ^^^ xor_second
 
@@ -53,7 +54,7 @@ defmodule TinyEVM.Operation.XorOperation do
   @doc """
   Gets the gas cost for the XOR operation.
   """
-  @spec get_gas_cost(op_code :: byte, context :: ExecutionContext) :: {(:ok | :error), integer}
+  @spec get_gas_cost(op_code :: byte, context :: ExecutionContext) :: {:ok | :error, integer}
   def get_gas_cost(op_code, _context) when op_code == @xor_op do
     {:ok, Gas.xor()}
   end
